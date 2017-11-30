@@ -11,8 +11,8 @@ class Fitnessable(metaclass=ABCMeta):
         fitness (int): A fitness score.
     """
 
-    def __init__(self):
-        self.fitness = 0
+    def __init__(self, fitness=0):
+        self.fitness = fitness
 
     def __repr__(self):
         return repr(self.fitness)
