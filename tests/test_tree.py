@@ -38,6 +38,14 @@ class TreeTest(TestCase):
         tree = Tree([1])
         self.assertIs(tree.root, tree.choose_node())
 
+    def test_is_empty(self):
+        tree = Tree()
+        self.assertTrue(tree.is_empty())
+
+    def test_is_empty_returns_false_when_a_tree_is_not_empty(self):
+        tree = Tree([1])
+        self.assertFalse(tree.is_empty())
+
     def test_random_walk_returns_root_when_only_root_is_present(self):
         tree = Tree([1])
         self.assertEqual([tree.root.item], tree.random_walk())
