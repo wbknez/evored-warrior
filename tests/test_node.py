@@ -57,6 +57,30 @@ class NodeTest(TestCase):
         node.left = left
         node.replace_child(node.left, other)
 
-        self.assertEquals(44, node.left.item)
+        self.assertEquals(other, node.left)
         self.assertIs(node, left.parent)
         self.assertIsNone(other.parent)
+
+    def test_swap_children(self):
+        node = Node(32)
+        left = Node(12, parent=node)
+        right = Node(42, parent=node)
+
+        node.left = left
+        node.right = right
+        node.swap_children()
+
+        self.assertIs(right, node.left)
+        self.assertIs(left, node.right)
+
+    def test_swap_places_with_same_parent(self):
+        node = Node(32)
+        left = Node(42, parent=node)
+        right = Node(52, parent=node)
+
+        node.left = left
+        node.right = right
+        left.swap_places(right)
+
+        self.assertIs(right, node.left)
+        self.assertIs(left, node.right)
