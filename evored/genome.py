@@ -1,6 +1,10 @@
 """
+Contains all the classes and functions that comprise the conceptual model for
+this project.
 """
 from abc import ABCMeta
+
+from evored.tree import Tree
 
 
 class Fitnessable(metaclass=ABCMeta):
@@ -30,6 +34,14 @@ class Chromosome(Fitnessable):
         super().__init__(fitness)
         self.ins = ins
 
+    def __copy__(self):
+        """
+        Creates a copy of this chromosome as a new object.
+
+        :return: A new chromosome.
+        """
+        return Chromosome(self.ins, self.fitness)
+
     def __eq__(self, other):
         if isinstance(other, Chromosome):
             return self.fitness == other.fitness and self.ins == other.ins
@@ -43,3 +55,14 @@ class Chromosome(Fitnessable):
 
     def __str__(self):
         return "(%s,%i)" % (self.ins, self.fitness)
+
+
+class Genome(Fitnessable, Tree):
+    """
+    Represents a probabilistic syntax tree whose nodes are comprised of
+    singular Redcode instructions.
+    """
+
+    def __init__(self):
+        Fitnessable.__init__(self)
+        Tree.__init__(self)
