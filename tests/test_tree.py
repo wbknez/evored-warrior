@@ -1,6 +1,7 @@
 """
 Contains unit tests for verifying correctness of Tree-related algorithms.
 """
+from copy import copy
 from unittest import TestCase
 
 import itertools
@@ -37,6 +38,13 @@ class TreeTest(TestCase):
     def test_choose_node_returns_root_when_only_root_is_present(self):
         tree = Tree([1])
         self.assertIs(tree.root, tree.choose_node())
+
+    def test_copy(self):
+        tree = Tree([1, 2, 3, 4, 5])
+        cloned = copy(tree)
+        for s, t in itertools.zip_longest(tree, cloned):
+            self.assertEqual(s, t)
+            self.assertIsNot(s, t)
 
     def test_is_empty(self):
         tree = Tree()
