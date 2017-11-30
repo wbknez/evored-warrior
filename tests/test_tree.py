@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import itertools
 
-from evored.tree import Tree
+from evored.tree import Tree, Node
 
 
 class TreeTest(TestCase):
@@ -37,3 +37,13 @@ class TreeTest(TestCase):
     def test_choose_node_returns_root_when_only_root_is_present(self):
         tree = Tree([1])
         self.assertIs(tree.root, tree.choose_node())
+
+    def test_random_walk_returns_root_when_only_root_is_present(self):
+        tree = Tree([1])
+        self.assertEqual([tree.root.item], tree.random_walk())
+
+    def test_random_walk(self):
+        tree = Tree([1])
+        tree.root.right = Node(32, parent=tree.root)
+        tree.root.right.left = Node(44, parent=tree.root.right)
+        self.assertEqual([1, 32, 44], tree.random_walk())
