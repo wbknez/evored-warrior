@@ -3,6 +3,7 @@ Contains all classes and functions for creating and working with an
 unstructured binary tree.
 """
 import itertools
+from copy import copy
 from random import random, randrange
 
 
@@ -198,6 +199,27 @@ class Tree:
 
         if not items is None:
             self.build(items)
+
+    def __copy__(self):
+        tree = Tree()
+        tree.root = Node(copy(self.root.item))
+
+        source = [self.root]
+        dest = [tree.root]
+
+        while source:
+            s = source.pop(0)
+            d = dest.pop(0)
+
+            if s.has_left():
+                source.append(s.left)
+                d.left = Node(copy(s.left.item), parent=d)
+                dest.append(d.left)
+            if s.has_right():
+                source.append(s.right)
+                d.right = Node(copy(s.right.item), parent=d)
+                dest.append(d.right)
+        return tree
 
     def __eq__(self, other):
         if isinstance(other, Tree):
