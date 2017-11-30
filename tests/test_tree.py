@@ -27,6 +27,13 @@ class TreeTest(TestCase):
     def test_build_with_moderate_numbers_of_elements(self):
         items = list(range(0, 1000))
         tree = Tree(items)
+        for node, item in itertools.zip_longest(tree, items):
+            self.assertEqual(item, node.item)
 
-        for node_item, item in itertools.zip_longest(tree, items):
-            self.assertEqual(item, node_item)
+    def test_choose_node_returns_none_when_tree_is_empty(self):
+        tree = Tree()
+        self.assertIs(None, tree.choose_node())
+
+    def test_choose_node_returns_root_when_only_root_is_present(self):
+        tree = Tree([1])
+        self.assertIs(tree.root, tree.choose_node())

@@ -301,5 +301,4 @@ class Tree:
         while current:
             items.append(current.item)
             current = current.choose_child()
-
         return items
