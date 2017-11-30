@@ -1,7 +1,7 @@
 # Makefile for Evolutionary Redcode Warriors.
 
 init:
-	pip install -r requirements.txt --user
+	pip3 install -r requirements.txt --user
 
 run:
 	@ python3 -m evored.main
