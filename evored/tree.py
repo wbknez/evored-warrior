@@ -191,8 +191,11 @@ class Tree:
 
     """
 
-    def __init__(self):
+    def __init__(self, items = None):
         self.root = None
+
+        if not items is None:
+            self.build(items)
 
     def __eq__(self, other):
         if isinstance(other, Tree):
@@ -226,7 +229,7 @@ class Tree:
         self.root = Node(items[0])
         queue = [self.root]
 
-        for item in itertools.islice(items, 1, len(items) - 1):
+        for item in itertools.islice(items, 1, len(items)):
             if queue[0].is_full():
                 queue.pop(0)
             current = queue[0]
