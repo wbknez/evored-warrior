@@ -3,6 +3,7 @@ Contains all classes and functions for creating and working with an
 unstructured binary tree.
 """
 import itertools
+from random import random
 
 
 def _compare_items(a, b):
@@ -67,6 +68,26 @@ class Node:
     def __ne__(self, other):
         return not self == other
 
+    def choose_child(self):
+        """
+        Randomly chooses a child.
+
+        Children are chosen using common-sense rules.  If either child is
+        absent then the other is chosen and if none are present then None is
+        return.  Finally, in the case of two children a random roll is
+        conducted between 0 and 1 and the left child is chosen if that roll
+        is less than 0.5 otherwise the right is returned.
+
+        :return: A randomly chosen child.
+        """
+        if self.is_leaf():
+            return None
+        elif self.has_left() and not self.has_right():
+            return self.left
+        elif not self.has_left() and self.has_right():
+            return self.right
+        return self.left if random.uniform(0, 1) < 0.5 else self.right
+
     def has_left(self):
         """
         Returns whether or not this node has a left child.
@@ -129,6 +150,15 @@ class Node:
         else:
             raise ValueError("Child does not belong to this node.")
 
+    def swap_children(self):
+        """
+        Swaps the placement of this node's children with each other,
+        effectively swapping each child's branch with the other.
+        """
+        temp = self.left
+        self.left = self.right
+        self.right = temp
+
     def swap_places(self, node):
         """
         Swaps this node with the specified node, each replacing the other's
@@ -142,9 +172,14 @@ class Node:
         parent_a = self.parent
         parent_b = node.parent
 
-        if parent_a is not None:
+        if (parent_a is not None and parent_b is not None) and \
+            (parent_a is parent_b):
+            self.parent.swap_children()
+            return
+
+        if parent_a:
             parent_a.replace_child(self, node)
-        if parent_b is not None:
+        if parent_b:
             parent_b.replace_child(node, self)
 
         self.parent = parent_b
@@ -180,6 +215,11 @@ class Tree:
                 queue.append(current.right)
 
     def build(self, items):
+        """
+
+        :param items:
+        :return:
+        """
         if self.root is not None:
             ValueError("Tree is already built.")
 
@@ -199,4 +239,21 @@ class Tree:
                 queue.append(current.right)
 
     def random_walk(self):
-        pass
+        """
+        Performs a "random walk" starting at the root node, randomly choosing
+        the next child to walk to.
+
+        Please note that this function returns a list of items, not nodes.
+        In this project there is a strict functional separation between the tree
+        structure and the value each node contains.
+
+        :return: A list of items obtained from the walk.
+        """
+        items = []
+        current = self.root
+
+        while current:
+            items.append(current.item)
+            current = current.choose_child()
+
+        return items
