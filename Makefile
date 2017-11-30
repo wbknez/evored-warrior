@@ -7,4 +7,4 @@ run:
 	@ python3 -m evored.main
 
 test:
-	nose2 tests
+	@ python3 -m nose2
