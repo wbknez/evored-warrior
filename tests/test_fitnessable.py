@@ -1,5 +1,5 @@
 """
-
+Contains unit tests for verifying correctness of fitness-related algorithms.
 """
 from random import randint
 from unittest import TestCase
