@@ -284,6 +284,14 @@ class Tree:
                 selected = node
         return selected
 
+    def is_empty(self):
+        """
+        Determines whether or not this tree is empty.
+
+        :return: Whether or not this tree is devoid of nodes.
+        """
+        return not self.root
+
     def random_walk(self):
         """
         Performs a "random walk" starting at the root node, randomly choosing
