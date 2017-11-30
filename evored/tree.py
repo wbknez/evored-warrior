@@ -85,3 +85,46 @@ class Node:
         :return: Whether or not there is at least one child.
         """
         return self.left is not None or self.right is not None
+
+    def replace_child(self, child, node):
+        """
+        Replaces the specified child of this node with the specified node.
+
+        Please note that this function does not reparent either the child or
+        the replacement node.
+
+        :param child: The child to replace.
+        :param node: The node to use as a replacement.
+        :raise ValueError: If the child is null or cannot be identified as a
+        child of this node.
+        """
+        if child is None:
+            raise ValueError("Child must not be null.")
+
+        if child is self.left:
+            self.left = node
+        elif child is self.right:
+            self.right = node
+        else:
+            raise ValueError("Child does not belong to this node.")
+
+    def swap_places(self, node):
+        """
+        Swaps this node with the specified node, each replacing the other's
+        position in their respective branch while keeping any sub-branches
+        intact and unaltered.
+
+        This function is identical to a branch swap.
+
+        :param node: The node to swap with.
+        """
+        parent_a = self.parent
+        parent_b = node.parent
+
+        if parent_a is not None:
+            parent_a.replace_child(self, node)
+        if parent_b is not None:
+            parent_b.replace_child(node, self)
+
+        self.parent = parent_b
+        node.parent = parent_a
