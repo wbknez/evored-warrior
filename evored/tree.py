@@ -3,7 +3,7 @@ Contains all classes and functions for creating and working with an
 unstructured binary tree.
 """
 import itertools
-from random import random
+from random import random, randrange
 
 
 def _compare_items(a, b):
@@ -210,16 +210,16 @@ class Tree:
 
     def __iter__(self):
         """
-        Creates a generator that returns the items of this tree in
+        Creates a generator that returns the nodes of this tree in
         breadth-first order.
 
-        :return: The items of this tree in breadth-first order.
+        :return: The nodes of this tree in breadth-first order.
         """
         queue = [self.root]
 
         while queue:
             current = queue.pop(0)
-            yield current.item
+            yield current
 
             if current.left is not None:
                 queue.append(current.left)
@@ -250,6 +250,39 @@ class Tree:
             elif not current.has_right():
                 current.right = Node(item=item, parent=current)
                 queue.append(current.right)
+
+    def choose_item(self):
+        """
+        Choose a random item from this tree.
+
+        This function is a simple wrapper around choose_node() and therefore has
+        the same performance characteristics.
+
+        :return: The item from a randomly chosen node.
+        """
+        node = self.choose_node()
+        return node.item if node is not None else None
+
+    def choose_node(self):
+        """
+        Chooses a random node from this tree.
+
+        This function is O(n) since, for this project, the number of nodes
+        will always be unknown.
+
+        :return: A randomly chosen node.
+        """
+        if not self.root:
+            return None
+
+        count = 0
+        selected = None
+
+        for node in self:
+            count += 1
+            if randrange(0, count) == 0:
+                selected = node
+        return selected
 
     def random_walk(self):
         """
