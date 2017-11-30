@@ -2,6 +2,7 @@
 Contains all classes and functions for creating and working with an
 unstructured binary tree.
 """
+import itertools
 
 
 def _compare_items(a, b):
@@ -57,10 +58,30 @@ class Node:
                    _compare_items(self.left, other.left) and \
                    _compare_items(self.parent, other.parent) and \
                    _compare_items(self.right, other.right)
+        return NotImplemented
 
     def __hash__(self):
         return hash((self.item, _get_item(self.left), _get_item(self.parent),
                      _get_item(self.right)))
+
+    def __ne__(self, other):
+        return not self == other
+
+    def has_left(self):
+        """
+        Returns whether or not this node has a left child.
+
+        :return: Whether or not there is a left child.
+        """
+        return self.left is not None
+
+    def has_right(self):
+        """
+        Returns whether or not this node has a right child.
+
+        :return: Whether or not there is a right child.
+        """
+        return self.right is not None
 
     def is_full(self):
         """
@@ -128,3 +149,54 @@ class Node:
 
         self.parent = parent_b
         node.parent = parent_a
+
+
+class Tree:
+    """
+
+    """
+
+    def __init__(self):
+        self.root = None
+
+    def __eq__(self, other):
+        if isinstance(other, Tree):
+            for s, t in itertools.zip_longest(self, other):
+                if not s == t:
+                    return False
+            return True
+        return NotImplemented
+
+    def __iter__(self):
+        queue = [self.root]
+
+        while queue:
+            current = queue.pop(0)
+            yield current.item
+
+            if current.left is not None:
+                queue.append(current.left)
+            if current.right is not None:
+                queue.append(current.right)
+
+    def build(self, items):
+        if self.root is not None:
+            ValueError("Tree is already built.")
+
+        self.root = Node(items[0])
+        queue = [self.root]
+
+        for item in itertools.islice(items, 1, len(items) - 1):
+            if queue[0].is_full():
+                queue.pop(0)
+            current = queue[0]
+
+            if not current.has_left():
+                current.left = Node(item=item, parent=current)
+                queue.append(current.left)
+            elif not current.has_right():
+                current.right = Node(item=item, parent=current)
+                queue.append(current.right)
+
+    def random_walk(self):
+        pass
