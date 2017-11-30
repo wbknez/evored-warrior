@@ -10,6 +10,20 @@ class NodeTest(TestCase):
     """
     Test suite for Node.
     """
+
+    def test_choose_child_returns_none_when_no_children_are_present(self):
+        node = Node(32)
+        self.assertIs(None, node.choose_child())
+
+    def test_choose_child_returns_left_when_only_left_is_present(self):
+        node = Node(32)
+        node.left = Node(42, parent=node)
+        self.assertIs(node.left, node.choose_child())
+
+    def test_choose_child_returns_right_when_only_right_is_present(self):
+        node = Node(32)
+        node.right = Node(42, parent=node)
+        self.assertIs(node.right, node.choose_child())
     
     def test_has_left(self):
         node = Node(32)
