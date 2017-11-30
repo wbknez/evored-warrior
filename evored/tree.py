@@ -188,7 +188,10 @@ class Node:
 
 class Tree:
     """
+    Represents an unstructured binary tree.
 
+    Attributes:
+        root (Node): The root node of this tree.
     """
 
     def __init__(self, items = None):
@@ -206,6 +209,12 @@ class Tree:
         return NotImplemented
 
     def __iter__(self):
+        """
+        Creates a generator that returns the items of this tree in
+        breadth-first order.
+
+        :return: The items of this tree in breadth-first order.
+        """
         queue = [self.root]
 
         while queue:
@@ -219,9 +228,10 @@ class Tree:
 
     def build(self, items):
         """
+        Fills out this tree in breadth-first order using the specified list
+        of items as elements.
 
-        :param items:
-        :return:
+        :param items: The items to fill the tree with.
         """
         if self.root is not None:
             ValueError("Tree is already built.")
