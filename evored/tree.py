@@ -172,8 +172,7 @@ class Node:
         parent_a = self.parent
         parent_b = node.parent
 
-        if (parent_a is not None and parent_b is not None) and \
-            (parent_a is parent_b):
+        if (parent_a and parent_b) and (parent_a is parent_b):
             self.parent.swap_children()
             return
 
