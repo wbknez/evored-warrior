@@ -115,3 +115,69 @@ class Modifier(Enum):
     Empty modifiers are allowed per the standard to facilitate backwards 
     compatibility.  That said, this is only used for random generation purposes.
     """
+
+
+class Argument:
+    """
+    Represents a single argument to an instruction in Redcode.
+    """
+
+    def __init__(self, addr_mode=AddressMode.Direct, value=0):
+        self.addr_mode = addr_mode
+        self.value = value
+
+    def __copy__(self):
+        return Argument(self.addr_mode, self.value)
+
+    def __eq__(self, other):
+        if isinstance(other, Argument):
+            return self.addr_mode == other.addr_mode and \
+                   self.value == other.value
+        return NotImplemented
+
+    def __hash__(self):
+        return hash((self.addr_mode, self.value))
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __str__(self):
+        return "%s%i" % (self.addr_mode.value, self.value)
+
+
+@unique
+class OpCode(Enum):
+    pass
+
+
+class Instruction:
+    """
+    Represents a collection of symbols that together form a single
+    instruction in Redcode.
+    """
+
+    def __init__(self, opcode, modifier=None, arg_a=None, arg_b=None):
+        self.opcode = opcode
+        self.modifier = modifier
+        self.arg_a = arg_a
+        self.arg_b = arg_b
+
+    def __eq__(self, other):
+        if isinstance(other, Instruction):
+            return self.opcode == other.opcode and \
+                   self.modifier == other.modifier and \
+                self.arg_a == other.arg_a and self.arg_b == other.arg_b
+        return NotImplemented
+
+    def __hash__(self):
+        return hash((self.opcode, self.modifier, self.arg_a, self.arg_b))
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __str__(self):
+        ins_str = self.opcode.value
+        if self.modifier:
+            ins_str += ".%s" % self.modifier.value
+        ins_str += " %s %s " % (self.arg_a, self.arg_b)
+        return ins_str
