@@ -6,6 +6,60 @@ from enum import unique, Enum
 
 
 @unique
+class AddressMode(Enum):
+    """
+    Represents the available addressing modes in Redcode.
+    """
+
+    A = "*"
+    """
+    Indirect addressing mode using the A-field (pointer of pointer address).
+    """
+
+    APredecrement = "{"
+    """
+    Addressing mode that decrements the A-field indirect address before 
+    retrieving the value stored at that location.
+    """
+
+    APostincrement = "}"
+    """
+    Addressing mode that increments the A-field indirect address after 
+    retrieving the value stored at that location.
+    """
+
+    B = "@"
+    """
+    Indirect addressing mode using the B-field (pointer of pointer address).
+    """
+
+    BPredecrement = "<"
+    """
+    Addressing mode that decrements the B-field indirect address before 
+    retrieving the value stored at that location.
+    """
+
+    BPostincrement = ">"
+    """
+    Addressing mode that increments the B-field indirect address after 
+    retrieving the value stored at that location.
+    """
+
+    Direct = "$"
+    """
+    Addressing mode that uses the value of the A- or B-fields as the address 
+    (direct pointer address).
+    
+    This mode is the default in the absence of any others.
+    """
+
+    Immediate = "#"
+    """
+    Addressing mode that uses the current instruction as the address.
+    """
+
+
+@unique
 class Modifier(Enum):
     """
     Represents a collection of modifiers that may adorn an argument value in
