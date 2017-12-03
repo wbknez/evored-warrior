@@ -162,6 +162,9 @@ class Instruction:
         self.arg_a = arg_a
         self.arg_b = arg_b
 
+    def __copy__(self):
+        return Instruction(self.opcode, self.modifier, self.arg_a, self.arg_b)
+
     def __eq__(self, other):
         if isinstance(other, Instruction):
             return self.opcode == other.opcode and \
