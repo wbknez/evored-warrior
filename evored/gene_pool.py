@@ -46,15 +46,32 @@ class RandomGenePool(GenePool):
         arg_range (tuple): The range of values an argument may have.
         modifiers (list): The list of available instruction modifiers.
         opcodes (list): The list of available operation codes.
+
+    Initialization Arguments:
+        allow_non_standard (bool): Allow operation codes that enable Redcode
+        programs to read and write to the standard input and output,
+        respectively.
+        allow_pspace (bool): Allow operation codes that enable Redcode
+        programs to make use of the so-called P-space, a private memory space
+        that is safe from attackers and persists between rounds.
     """
 
     def __init__(self, opcodes=list(OpCode), modifiers=list(Modifier),
-                 addr_modes=list(AddressMode), arg_range=(0, 8000)):
+                 addr_modes=list(AddressMode), arg_range=(0, 8000),
+                 allow_non_standard=False, allow_pspace=True):
         super().__init__()
         self.opcodes = opcodes
         self.modifiers = modifiers
         self.addr_modes = addr_modes
         self.arg_range = arg_range
+
+        if not allow_non_standard:
+            self.opcodes.remove(OpCode.Lds)
+            self.opcodes.remove(OpCode.Sts)
+
+        if not allow_pspace:
+            self.opcodes.remove(OpCode.Ldp)
+            self.opcodes.remove(OpCode.Stp)
 
     def next_gene(self):
         return Instruction(choice(self.opcodes), choice(self.modifiers),
