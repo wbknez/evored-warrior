@@ -66,16 +66,22 @@ class RandomGenePool(GenePool):
         self.arg_range = arg_range
 
         if not allow_non_standard:
-            self.opcodes.remove(OpCode.Lds)
-            self.opcodes.remove(OpCode.Sts)
+            if OpCode.Lds in self.opcodes:
+                self.opcodes.remove(OpCode.Lds)
+            if OpCode.Sts in self.opcodes:
+                self.opcodes.remove(OpCode.Sts)
 
         if not allow_pspace:
-            self.opcodes.remove(OpCode.Ldp)
-            self.opcodes.remove(OpCode.Stp)
+            if OpCode.Ldp in self.opcodes:
+                self.opcodes.remove(OpCode.Ldp)
+            if OpCode.Stp in self.opcodes:
+                self.opcodes.remove(OpCode.Stp)
 
     def next_gene(self):
         return Instruction(choice(self.opcodes), choice(self.modifiers),
                            Argument(choice(self.addr_modes),
-                                    randrange(self.arg_range)),
+                                    randrange(self.arg_range[0],
+                                              self.arg_range[1])),
                            Argument(choice(self.addr_modes),
-                                    randrange(self.arg_range)))
+                                    randrange(self.arg_range[0],
+                                              self.arg_range[1])))
