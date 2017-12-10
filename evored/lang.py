@@ -147,13 +147,150 @@ class Argument:
 
 @unique
 class OpCode(Enum):
-    pass
+    """
+    Represents a single operation code in Redcode.
+    """
+
+    Add = "ADD"
+    """
+    Adds the value in the A-field to that of the B-field.
+    """
+
+    Dat = "DAT"
+    """
+    Terminates the current process.
+    """
+
+    Div = "DIV"
+    """
+    Divides the value in the A-field by that of the B-field.
+    
+    If division by zero is attempted, the current process will terminate.
+    """
+
+    Djn = "DJN"
+    """
+    Decrements the value in the B-field and transfers control to that of the 
+    A-field if the B-field value is not zero.
+    """
+
+    Jmp = "JMP"
+    """
+    Transfers control to the location given by the value in the A-field.
+    """
+
+    Jmn = "JMN"
+    """
+    Transfers control to the value in the A-field if the B-field is not zero.
+    """
+
+    Jmz = "JMZ"
+    """
+    Transfers control to the value in the A-field if the B-field is zero.
+    """
+
+    Ldp = "LDP"
+    """
+    Copies the value located in P-space specified by the A-field to that of 
+    the B-field.
+    
+    This is a P-space specific instruction and may be omitted from the 
+    available set of operation codes a random instruction generator may 
+    choose from if specified.
+    """
+
+    Lds = "LDS"
+    """
+    Reads a character from the standard input and stores it in the value of 
+    the A-field.
+    
+    This is a non-standard instruction and is normally omitted from the 
+    available set of operation codes a random instruction generator may 
+    choose from.
+    """
+
+    Mod = "MOD"
+    """
+    Divides the value in the A-field by that of the B-field and sets the 
+    value of the B-field to the remainder.
+    
+    This is modulus division whose result is stored in the value of 
+    the B-field.  Attempted division by zero will terminate the current process.
+    """
+
+    Mov = "MOV"
+    """
+    Copies the value in the A-field to that of the B-field.
+    """
+
+    Mul = "MUL"
+    """
+    Multiplies the value in the A-field by that of the B-field.
+    """
+
+    Nop = "NOP"
+    """
+    No operation.
+    """
+
+    Seq = "SEQ"
+    """
+    Skips the next instruction if the values in both the A- and B-fields are 
+    equal.
+    """
+
+    Slt = "SLT"
+    """
+    Skips the next instruction of the value in the A-field is less than that 
+    of the B-field.
+    """
+
+    Sne = "SNE"
+    """
+    Skips the next instruction if the values in both the A- and B-fields are 
+    not equal.    
+    """
+
+    Spl = "SPL"
+    """
+    Starts a new process at the location of the value in the A-field.
+    """
+
+    Stp = "STP"
+    """
+    Copies the value in the A-field to the location in P-space specified by 
+    the B-field.
+    
+    This is a P-space specific instruction and may be omitted from the 
+    available set of operation codes a random instruction generator may 
+    choose from if specified.
+    """
+
+    Sts = "STS"
+    """
+    Writes the value in the A-field to the standard output.
+    
+    This is a non-standard instruction and is normally omitted from the 
+    available set of operation codes a random instruction generator may 
+    choose from.
+    """
+
+    Sub = "SUB"
+    """
+    Subtracts the value in the A-field from that of the B-field.
+    """
 
 
 class Instruction:
     """
     Represents a collection of symbols that together form a single
     instruction in Redcode.
+
+    Please note that in Redcode arguments are evaluated regardless of use.
+    This means that the addressing mode of an argument will always be applied
+    to its value even if the operation code does not make use of it.  This
+    has important implications for argument mutation as well as overall
+    program construction.
     """
 
     def __init__(self, opcode, modifier=None, arg_a=None, arg_b=None):
