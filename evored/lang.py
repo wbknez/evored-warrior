@@ -293,7 +293,7 @@ class Instruction:
     program construction.
     """
 
-    def __init__(self, opcode, modifier=None, arg_a=None, arg_b=None):
+    def __init__(self, opcode, modifier, arg_a, arg_b):
         self.opcode = opcode
         self.modifier = modifier
         self.arg_a = arg_a
