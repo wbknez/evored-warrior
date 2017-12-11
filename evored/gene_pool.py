@@ -23,7 +23,7 @@ class GenePool(metaclass=ABCMeta):
         :param count: The number of genes to extract from the pool.
         :return: A list of new genes.
         """
-        return [self.next_gene for _ in range(0, count)]
+        return [self.next_gene() for _ in range(0, count)]
 
     @abstractmethod
     def next_gene(self):
