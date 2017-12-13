@@ -56,13 +56,13 @@ class RandomGenePool(GenePool):
         that is safe from attackers and persists between rounds.
     """
 
-    def __init__(self, opcodes=list(OpCode), modifiers=list(Modifier),
-                 addr_modes=list(AddressMode), arg_range=(0, 8000),
-                 allow_non_standard=False, allow_pspace=True):
+    def __init__(self, opcodes=None, modifiers=None, addr_modes=None,
+                 arg_range=(0, 8000), allow_non_standard=False,
+                 allow_pspace=True):
         super().__init__()
-        self.opcodes = opcodes
-        self.modifiers = modifiers
-        self.addr_modes = addr_modes
+        self.opcodes = opcodes if opcodes else list(OpCode)
+        self.modifiers = modifiers if modifiers else list(Modifier)
+        self.addr_modes = addr_modes if addr_modes else list(AddressMode)
         self.arg_range = arg_range
 
         if not allow_non_standard:
