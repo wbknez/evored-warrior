@@ -21,6 +21,18 @@ class FitnessableTest(TestCase):
     Test suite for Fitnessable.
     """
 
+    def test_math_operations(self):
+        a = TestFitness(30)
+        b = TestFitness(45)
+        c = TestFitness(45)
+
+        self.assertFalse(a >= b)
+        self.assertFalse(b <= a)
+        self.assertTrue(a < b)
+        self.assertTrue(b <= c)
+        self.assertTrue(b > a)
+        self.assertTrue(b >= c)
+
     def test_ordering(self):
         objs = []
 
