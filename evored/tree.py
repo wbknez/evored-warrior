@@ -160,6 +160,16 @@ class Node:
         self.left = self.right
         self.right = temp
 
+    def swap_items(self, node):
+        """
+        Swaps the item of this node with that of the specified node.
+
+        :param node: The node to swap items with.
+        """
+        temp = self.item
+        self.item = node.item
+        node.item = temp
+
     def swap_places(self, node):
         """
         Swaps this node with the specified node, each replacing the other's
@@ -194,7 +204,7 @@ class Tree:
         root (Node): The root node of this tree.
     """
 
-    def __init__(self, items = None):
+    def __init__(self, items=None):
         self.root = None
 
         if not items is None:
