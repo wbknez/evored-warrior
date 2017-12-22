@@ -12,7 +12,7 @@ class Mutator(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def mutate(self, genome, params):
+    def mutate(self, genome, params=None):
         """
         Mutates the specified genome in some way, influenced by the specified
         user-selected parameters.
@@ -68,7 +68,10 @@ class HeapDownMutator(Mutator):
         if node.item < chosen_child.item:
             node.swap_items(chosen_child)
 
-    def mutate(self, genome, params):
+    def mutate(self, genome, params=None):
+        if not params:
+            params = {}
+
         if not genome.root:
             raise ValueError("Cannot mutate - the genome is empty.")
 
