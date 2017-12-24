@@ -2,6 +2,8 @@
 Contains all classes and functions pertaining to methods of genome selection.
 """
 from abc import ABCMeta, abstractmethod
+from copy import copy
+from math import ceil
 
 
 class Selector(metaclass=ABCMeta):
@@ -11,7 +13,7 @@ class Selector(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def select(self, ge_in, ge_out, params):
+    def select(self, ge_in, ge_out, params=None):
         """
         Selects the best genomes from the specified list for continuation in
         some way, influenced by the specified user-selected parameters.
@@ -31,3 +33,24 @@ class Selector(metaclass=ABCMeta):
         :param params: A dictionary of parameters.
         """
         pass
+
+
+class ReplacementSelector(Selector):
+    """
+    An implementation of Selector that replaces the bottom half of a list of
+    genomes with copies from the top.
+    """
+
+    def select(self, ge_in, ge_out, params=None):
+        if not params:
+            params = {}
+
+        current = 0
+        half_size = ceil(len(ge_in) / 2)
+
+        ge_in.sort(reverse=True)
+        ge_out.extend(ge_in[:half_size])
+
+        while len(ge_out) != len(ge_in):
+            ge_out.append(copy(ge_in[current]))
+            current += 1
