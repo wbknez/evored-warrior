@@ -4,6 +4,7 @@ Contains all classes and functions pertaining to methods of genome selection.
 from abc import ABCMeta, abstractmethod
 from copy import copy
 from math import ceil
+from random import choice
 
 
 class Selector(metaclass=ABCMeta):
@@ -37,8 +38,8 @@ class Selector(metaclass=ABCMeta):
 
 class ReplacementSelector(Selector):
     """
-    An implementation of Selector that replaces the bottom half of a list of
-    genomes with copies from the top.
+    Represents an implementation of Selector that replaces the bottom half of a
+    list of genomes with copies from the top.
     """
 
     def select(self, ge_in, ge_out, params=None):
@@ -54,3 +55,23 @@ class ReplacementSelector(Selector):
         while len(ge_out) != len(ge_in):
             ge_out.append(copy(ge_in[current]))
             current += 1
+
+
+class TournamentSelector(Selector):
+    """
+    Represents an implementation of Selector that performs an n-size
+    random tournament to find the best genomes for selection.
+    """
+
+    def select(self, ge_in, ge_out, params=None):
+        if not params:
+            params = {}
+
+        tourn_size = params.get("selector.tournament_size", 2)
+        for i in range(0, len(ge_in)):
+            best = None
+            for t in range(0, tourn_size):
+                chosen = choice(ge_in)
+                if best is None or chosen > best:
+                    best = chosen
+            ge_out.append(copy(best))
