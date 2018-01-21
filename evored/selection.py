@@ -19,7 +19,7 @@ class Selector(EvolvingAlgorithm):
         return pool.map(binding, genomes)
 
     @abstractmethod
-    def select(self, genomes, params):
+    def select(self, current, genomes, params):
         """
         Selects the best genomes from the specified list for continuation in
         some way, influenced by the specified user-selected parameters.
@@ -28,6 +28,7 @@ class Selector(EvolvingAlgorithm):
         not this function.  As such, this function should neither consider
         the implications of nor perform elitism itself.
 
+        :param current: The current genome (used as an index placeholder).
         :param genomes: The list of genomes to select from.
         :param params: A dictionary of parameters.
         :return: One or more genomes selected for continued evolution.
@@ -46,7 +47,7 @@ class RouletteSelection(Selector):
         binding = partial(self.select, genomes=genomes, params=params)
         return pool.map(binding, genomes)
 
-    def select(self, genomes, params):
+    def select(self, current, genomes, params):
         while True:
             selected = choice(genomes)
             if random() < (selected.fitness / genomes[-1].fitness):
@@ -64,6 +65,6 @@ class TournamentSelector(Selector):
         binding = partial(self.select, genomes=genomes, params=params)
         return pool.map(binding, genomes)
 
-    def select(self, genomes, params):
+    def select(self, current, genomes, params):
         return max(sample(genomes, params["selector.tournament_size"]))
 
