@@ -3,7 +3,7 @@ Contains all classes and functions pertaining to methods of genome selection.
 """
 from abc import abstractmethod
 from functools import partial
-from random import shuffle, sample
+from random import shuffle, sample, random, choice
 
 from evored.evolution import EvolvingAlgorithm
 
@@ -33,6 +33,24 @@ class Selector(EvolvingAlgorithm):
         :return: One or more genomes selected for continued evolution.
         """
         pass
+
+
+class RouletteSelection(Selector):
+    """
+    An implementation of {@link SelectionFunction} that uses stochastic
+    acceptance to select genomes to allow into the next generation.
+    """
+
+    def evolve(self, genomes, pool, params):
+        sorted(genomes)
+        binding = partial(self.select, genomes=genomes, params=params)
+        return pool.map(binding, genomes)
+
+    def select(self, genomes, params):
+        while True:
+            selected = choice(genomes)
+            if random() < (selected.fitness / genomes[-1].fitness):
+                return selected
 
 
 class TournamentSelector(Selector):
