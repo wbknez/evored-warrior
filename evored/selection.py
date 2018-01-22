@@ -10,6 +10,7 @@ from math import ceil
 from copy import copy
 
 from evored.evolution import EvolvingAlgorithm
+from evored.utils import flatten
 
 
 class Selector(EvolvingAlgorithm):
@@ -52,7 +53,7 @@ class ReplacementSelector(Selector):
 
         sorted(genomes, reverse=True)
         binding = partial(self.select, genomes=genomes, params=params)
-        return pool.map(binding, genomes[upper_bound])[fixed_size]
+        return flatten(pool.map(binding, genomes[upper_bound])[fixed_size])
 
     def select(self, current, genomes, params):
         return [current, copy(current)]
