@@ -3,7 +3,6 @@ Contains all classes and functions pertaining to methods of genome crossover.
 """
 from abc import abstractmethod
 from functools import partial
-from math import floor
 from random import random, shuffle
 
 from evored.evolution import EvolvingAlgorithm
@@ -42,5 +41,19 @@ class Crossover(EvolvingAlgorithm):
             if random() < params["crossover.rate"]:
                 crossing_pairs.append(genomes.pop(i))
                 crossing_pairs.append(genomes.pop(i + 1))
-        half_width = floor(len(crossing_pairs) / 2)
+        half_width = len(crossing_pairs) // 2
         return [crossing_pairs[:half_width], crossing_pairs[half_width:]]
+
+
+class UniformCrossover(Crossover):
+    """
+    Represents an implementation of Crossover that exchanges genetic
+    information between two genomes chromosome by chromosome using a uniform
+    probability.
+    """
+
+    def cross(self, genome_a, genome_b, params):
+        for a, b in zip(genome_a, genome_b):
+            if random() < params["crossover.uniform_rate"]:
+                a.swap_items(b)
+        return [genome_a, genome_b]
