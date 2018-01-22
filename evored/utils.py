@@ -10,6 +10,17 @@ import shutil
 from abc import ABCMeta, abstractmethod
 
 
+def flatten(llist):
+    """
+    Flattens the specified list, iterating over any sublists within and
+    placing those elements into a new, larger list.
+
+    :param llist: The list to flatten.
+    :return: A new list containing the elements of all sublists.
+    """
+    return [item for sublist in llist for item in sublist]
+
+
 @contextlib.contextmanager
 def cd(new_dir, cleanup=lambda: True):
     """
