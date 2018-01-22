@@ -43,8 +43,8 @@ class Selector(EvolvingAlgorithm):
 
 class ReplacementSelector(Selector):
     """
-    An implementation of Selector that replaces the lower half of a genome
-    fitness distribution with the upper portion.
+    Represents an implementation of Selector that replaces the lower half of a
+    genome fitness distribution with the upper portion.
     """
 
     def evolve(self, genomes, pool, params):
@@ -61,8 +61,8 @@ class ReplacementSelector(Selector):
 
 class RouletteSelection(Selector):
     """
-    An implementation of Selector} that uses stochastic acceptance to select
-    genomes to allow into the next generation.
+    Represents an implementation of Selector} that uses stochastic acceptance to
+    select genomes to allow into the next generation.
     """
 
     def evolve(self, genomes, pool, params):
