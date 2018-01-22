@@ -39,7 +39,7 @@ class Crossover(EvolvingAlgorithm):
         """
         Iterates over the specified list of genomes and determines whether or
         not each pair therein will be subjected to crossover according to a
-        user-specied rate.
+        user-specified rate.
 
         :param genomes: The list of genomes to extract crossover pairs from.
         :param params: The dictionary of user-specified parameters.
