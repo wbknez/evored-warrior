@@ -22,11 +22,11 @@ class TournamentSelectorTest(TestCase):
 
     def test_basic_tournament_selection(self):
         genomes = [
-            Genome(list(range(randint(0, 10))), 20),
-            Genome(list(range(randint(0, 10))), 32),
-            Genome(list(range(randint(0, 10))), 44),
-            Genome(list(range(randint(0, 10))), 2),
+            Genome(list(range(randint(1, 10))), 20),
+            Genome(list(range(randint(1, 10))), 32),
+            Genome(list(range(randint(1, 10))), 44),
+            Genome(list(range(randint(1, 10))), 2),
         ]
 
-        results = self.selector.select(genomes, self.params)
+        results = self.selector.select(None, genomes, self.params)
         self.assertEqual(genomes[2], results)
