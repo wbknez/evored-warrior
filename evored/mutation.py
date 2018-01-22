@@ -99,3 +99,12 @@ class HeapDownMutator(Mutator):
             if current.has_right() and not current.right.is_leaf():
                 queue.append(current.right)
         return genome
+
+
+class NoMutator(Mutator):
+    """
+    Represents an implementation of Mutator that does nothing.
+    """
+
+    def mutate(self, genome, params):
+        return genome

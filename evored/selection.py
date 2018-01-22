@@ -59,9 +59,18 @@ class ReplacementSelector(Selector):
         return [current, copy(current)]
 
 
+class NoSelector(Selector):
+    """
+    Represents an implementation of Selector that does nothing.
+    """
+
+    def select(self, current, genomes, params):
+        return current
+
+
 class RouletteSelection(Selector):
     """
-    Represents an implementation of Selector} that uses stochastic acceptance to
+    Represents an implementation of Selector that uses stochastic acceptance to
     select genomes to allow into the next generation.
     """
 

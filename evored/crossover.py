@@ -55,6 +55,15 @@ class Crossover(EvolvingAlgorithm):
         return [crossing_pairs[:half_width], crossing_pairs[half_width:]]
 
 
+class NoCrossover(Crossover):
+    """
+    Represents an implementation of Crossover that does nothing.
+    """
+
+    def cross(self, genome_a, genome_b, params):
+        return [genome_a, genome_b]
+
+
 class UniformCrossover(Crossover):
     """
     Represents an implementation of Crossover that exchanges genetic
