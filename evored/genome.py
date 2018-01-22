@@ -120,6 +120,6 @@ class Genome(Fitnessable, Tree):
     singular Redcode instructions.
     """
 
-    def __init__(self, chromosomes=None):
-        Fitnessable.__init__(self)
+    def __init__(self, chromosomes=None, fitness=0):
+        Fitnessable.__init__(self, fitness)
         Tree.__init__(self, chromosomes)
