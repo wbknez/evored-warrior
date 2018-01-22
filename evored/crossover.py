@@ -47,10 +47,15 @@ class Crossover(EvolvingAlgorithm):
         """
 
         crossing_pairs = []
-        for i in range(0, len(genomes) - 1, 2):
+        current = 0
+
+        while current < len(genomes) and len(genomes) > 1:
             if random() < params["crossover.rate"]:
-                crossing_pairs.append(genomes.pop(i))
-                crossing_pairs.append(genomes.pop(i + 1))
+                crossing_pairs.append(genomes.pop(current))
+                crossing_pairs.append(genomes.pop(current))
+            else:
+                current += 2
+
         half_width = len(crossing_pairs) // 2
         return [crossing_pairs[:half_width], crossing_pairs[half_width:]]
 
