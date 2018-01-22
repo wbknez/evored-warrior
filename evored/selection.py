@@ -5,6 +5,10 @@ from abc import abstractmethod
 from functools import partial
 from random import shuffle, sample, random, choice
 
+from math import ceil
+
+from copy import copy
+
 from evored.evolution import EvolvingAlgorithm
 
 
@@ -36,10 +40,28 @@ class Selector(EvolvingAlgorithm):
         pass
 
 
+class ReplacementSelector(Selector):
+    """
+    An implementation of Selector that replaces the lower half of a genome
+    fitness distribution with the upper portion.
+    """
+
+    def evolve(self, genomes, pool, params):
+        fixed_size = len(genomes)
+        upper_bound = ceil(fixed_size / 2)
+
+        sorted(genomes, reverse=True)
+        binding = partial(self.select, genomes=genomes, params=params)
+        return pool.map(binding, genomes[upper_bound])[fixed_size]
+
+    def select(self, current, genomes, params):
+        return [current, copy(current)]
+
+
 class RouletteSelection(Selector):
     """
-    An implementation of {@link SelectionFunction} that uses stochastic
-    acceptance to select genomes to allow into the next generation.
+    An implementation of Selector} that uses stochastic acceptance to select
+    genomes to allow into the next generation.
     """
 
     def evolve(self, genomes, pool, params):
@@ -51,7 +73,7 @@ class RouletteSelection(Selector):
         while True:
             selected = choice(genomes)
             if random() < (selected.fitness / genomes[-1].fitness):
-                return selected
+                return copy(selected)
 
 
 class TournamentSelector(Selector):
@@ -66,5 +88,5 @@ class TournamentSelector(Selector):
         return pool.map(binding, genomes)
 
     def select(self, current, genomes, params):
-        return max(sample(genomes, params["selector.tournament_size"]))
+        return copy(max(sample(genomes, params["selector.tournament_size"])))
 
