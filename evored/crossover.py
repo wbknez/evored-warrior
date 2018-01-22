@@ -36,6 +36,16 @@ class Crossover(EvolvingAlgorithm):
         return genomes + flatten(pool.map(binding, pair_a, pair_b))
 
     def extract_crossing_pairs(self, genomes, params):
+        """
+        Iterates over the specified list of genomes and determines whether or
+        not each pair therein will be subjected to crossover according to a
+        user-specied rate.
+
+        :param genomes: The list of genomes to extract crossover pairs from.
+        :param params: The dictionary of user-specified parameters.
+        :return: Two lists of genomes to facilitate element-wise crossover.
+        """
+
         crossing_pairs = []
         for i in range(0, len(genomes) - 1, 2):
             if random() < params["crossover.rate"]:
