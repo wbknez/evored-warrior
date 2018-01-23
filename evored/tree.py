@@ -27,6 +27,38 @@ def _compare_items(a, b):
     return a.item == b.item
 
 
+def _copy_tree(source, target):
+    """
+    Copies both the specified source tree to the specified target, keeping
+    both content and structure intact.
+
+    :param source: The tree to copy from.
+    :param target: The tree to copy to.
+    :return: The newly copied tree.
+    """
+    if target.root:
+        raise ValueError("Cannot copy to initialized tree.")
+
+    target.root = Node(copy(source.root.item))
+
+    source = [source.root]
+    dest = [target.root]
+
+    while source:
+        s = source.pop(0)
+        d = dest.pop(0)
+
+        if s.has_left():
+            source.append(s.left)
+            d.left = Node(copy(s.left.item), parent=d)
+            dest.append(d.left)
+        if s.has_right():
+            source.append(s.right)
+            d.right = Node(copy(s.right.item), parent=d)
+            dest.append(d.right)
+    return target
+
+
 def _get_item(node):
     """
     Returns the item element of the specified node if [the node] is not null.
@@ -211,25 +243,7 @@ class Tree:
             self.build(items)
 
     def __copy__(self):
-        tree = Tree()
-        tree.root = Node(copy(self.root.item))
-
-        source = [self.root]
-        dest = [tree.root]
-
-        while source:
-            s = source.pop(0)
-            d = dest.pop(0)
-
-            if s.has_left():
-                source.append(s.left)
-                d.left = Node(copy(s.left.item), parent=d)
-                dest.append(d.left)
-            if s.has_right():
-                source.append(s.right)
-                d.right = Node(copy(s.right.item), parent=d)
-                dest.append(d.right)
-        return tree
+        return _copy_tree(self, Tree())
 
     def __eq__(self, other):
         if isinstance(other, Tree):
