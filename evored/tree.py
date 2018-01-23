@@ -271,6 +271,9 @@ class Tree:
             if current.right is not None:
                 queue.append(current.right)
 
+    def __str__(self):
+        return str([node.item for node in self])
+
     def build(self, items):
         """
         Fills out this tree in breadth-first order using the specified list
