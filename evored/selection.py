@@ -51,9 +51,14 @@ class ReplacementSelector(Selector):
         fixed_size = len(genomes)
         upper_bound = ceil(fixed_size / 2)
 
-        sorted(genomes, reverse=True)
+        genomes.sort(reverse=True)
         binding = partial(self.select, genomes=genomes, params=params)
-        return flatten(pool.map(binding, genomes[upper_bound])[fixed_size])
+        selected = flatten(pool.map(binding, genomes[:upper_bound]))
+
+        if len(selected) == (len(genomes) + 1):
+            del selected[-1]
+
+        return selected
 
     def select(self, current, genomes, params):
         return [current, copy(current)]
@@ -75,7 +80,7 @@ class RouletteSelection(Selector):
     """
 
     def evolve(self, genomes, pool, params):
-        sorted(genomes)
+        genomes.sort()
         binding = partial(self.select, genomes=genomes, params=params)
         return pool.map(binding, genomes)
 
