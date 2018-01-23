@@ -4,7 +4,7 @@ this project.
 """
 from abc import ABCMeta
 
-from evored.tree import Tree
+from evored.tree import Tree, _copy_tree
 
 
 class Fitnessable(metaclass=ABCMeta):
@@ -123,3 +123,6 @@ class Genome(Fitnessable, Tree):
     def __init__(self, chromosomes=None, fitness=0):
         Fitnessable.__init__(self, fitness)
         Tree.__init__(self, chromosomes)
+
+    def __copy__(self):
+        return _copy_tree(self, Genome(fitness=self.fitness))
