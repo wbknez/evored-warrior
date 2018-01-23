@@ -1,5 +1,6 @@
 """
-
+Contains unit tests for ensuring replacement selection (and truncation) works
+as expected.
 """
 from random import shuffle
 from unittest import TestCase
@@ -13,7 +14,7 @@ from tests import create_genomes
 
 class ReplacementSelectorTest(TestCase):
     """
-
+    Test suite for ReplacementSelector.
     """
 
     pool = ProcessPool(processes=2)
