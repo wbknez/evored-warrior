@@ -126,3 +126,21 @@ class Genome(Fitnessable, Tree):
 
     def __copy__(self):
         return _copy_tree(self, Genome(fitness=self.fitness))
+
+    def __eq__(self, other):
+        if isinstance(other, Genome):
+            return Fitnessable.__eq__(self, other) and Tree.__eq__(self, other)
+        return NotImplemented
+
+    def hash(self):
+        return hash((Fitnessable.__hash__(self), Tree.__hash__(self)))
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __repr__(self):
+        return repr((Fitnessable.__repr__(self), Tree.__repr__(self)))
+
+    def __str__(self):
+        return "(" + Fitnessable.__str__(self) + ", " + \
+               Tree.__str__(self) + ")"
