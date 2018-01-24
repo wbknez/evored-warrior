@@ -73,7 +73,7 @@ class NoSelector(Selector):
         return current
 
 
-class RouletteSelection(Selector):
+class RouletteSelector(Selector):
     """
     Represents an implementation of Selector that uses stochastic acceptance to
     select genomes to allow into the next generation.
