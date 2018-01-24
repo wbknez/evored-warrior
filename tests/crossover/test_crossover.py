@@ -12,7 +12,6 @@ class CrossoverTest(TestCase):
     Test suite for Crossover.
     """
 
-
     class EmptyCrossover(Crossover):
         """
         Represents a test implementation of Crossover that does nothing.
