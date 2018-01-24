@@ -4,6 +4,8 @@ heap-based mutation.
 """
 from unittest import TestCase
 
+from pathos.multiprocessing import ProcessPool
+
 from evored.genome import Genome
 from evored.mutation import HeapDownMutator
 
@@ -11,6 +13,11 @@ from evored.mutation import HeapDownMutator
 class HeapDownMutatorTest(TestCase):
     """
     Test suite for HeapDownMutator.
+    """
+
+    pool = ProcessPool(processes=2)
+    """
+    The process pool for testing.
     """
 
     def setUp(self):
@@ -46,3 +53,18 @@ class HeapDownMutatorTest(TestCase):
         results = [x.item for x in output]
 
         self.assertEqual(expected, results)
+
+    def test_mutator_in_parallel(self):
+        genomes = [
+            Genome([1, 2, 3, 4, 5, 6, 7]),
+            Genome([12, 40]),
+            Genome([32, 40, 12])
+        ]
+        expected = [
+            Genome([3, 5, 7, 4, 2, 6, 1]),
+            Genome([40, 12]),
+            Genome([40, 32, 12])
+        ]
+
+        results = self.mutator.evolve(genomes, self.pool, self.params)
+        self.assertEqual(results, expected)
