@@ -29,7 +29,7 @@ class ReplacementSelectorTest(TestCase):
     def tearDown(self):
         pass
 
-    def test_replacement_selection_with_even_size_list(self):
+    def test_replacement_selection_with_even_size_list_in_parallel(self):
         genomes = create_genomes(10)
         genomes.sort(reverse=True, key=lambda g: g.fitness)
         min_fitness = genomes[ceil(len(genomes) / 2)].fitness
@@ -41,7 +41,7 @@ class ReplacementSelectorTest(TestCase):
         for result in results:
             self.assertGreaterEqual(result.fitness, min_fitness)
 
-    def test_replacement_selection_with_odd_size_list(self):
+    def test_replacement_selection_with_odd_size_list_in_parallel(self):
         genomes = create_genomes(21)
         genomes.sort(reverse=True, key=lambda g: g.fitness)
         min_fitness = genomes[ceil(len(genomes) / 2)].fitness
