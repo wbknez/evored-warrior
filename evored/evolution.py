@@ -12,10 +12,11 @@ class EvolvingAlgorithm(metaclass=ABCMeta):
     parallel processing.
 
     For this project, the pieces of the overall algorithm can be broken up
-    into one of three tasks:
-        1. Selection, or the determination of the most (currently) fit genomes.
-        2. Mutation, or the alteration of genomes to increase fitness.
-        3. Crossover, or the exchange of genetic data between genomes to
+    into one of four tasks:
+        1. Fitness evaluation, or the computation of genome fitness.
+        2. Selection, or the determination of the most (currently) fit genomes.
+        3. Mutation, or the alteration of genomes to increase fitness.
+        4. Crossover, or the exchange of genetic data between genomes to
         produce diversity.
 
     This interface is intended to define a uniform usage pattern for all
