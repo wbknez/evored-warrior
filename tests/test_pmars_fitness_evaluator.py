@@ -4,7 +4,7 @@ evaluation algorithms.
 """
 from unittest import TestCase
 
-from evored.evaluation import PmarsFitnessEvaluator
+from evored.fitness.evaluation import PmarsFitnessEvaluator
 
 
 class PmarsFitnessEvaluatorTest(TestCase):
