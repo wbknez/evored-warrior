@@ -9,7 +9,7 @@ from math import ceil
 
 from copy import copy
 
-from evored.evolution import EvolvingAlgorithm
+from evored.algorithm import EvolvingAlgorithm
 from evored.utils import flatten
 
 

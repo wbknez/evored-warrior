@@ -5,7 +5,7 @@ from abc import abstractmethod
 from functools import partial
 from random import random, shuffle
 
-from evored.evolution import EvolvingAlgorithm
+from evored.algorithm import EvolvingAlgorithm
 from evored.utils import flatten
 
 

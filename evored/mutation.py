@@ -5,7 +5,7 @@ from abc import abstractmethod
 from functools import partial
 from random import random
 
-from evored.evolution import EvolvingAlgorithm
+from evored.algorithm import EvolvingAlgorithm
 
 
 class Mutator(EvolvingAlgorithm):
