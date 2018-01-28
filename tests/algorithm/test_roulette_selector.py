@@ -6,7 +6,7 @@ from unittest import TestCase
 from pathos.multiprocessing import ProcessPool
 
 from evored.genome import Genome
-from evored.selection import RouletteSelector
+from evored.algorithm.selection import RouletteSelector
 
 
 class RouletteSelectorTest(TestCase):

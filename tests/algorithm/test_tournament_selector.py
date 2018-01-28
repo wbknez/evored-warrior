@@ -8,7 +8,7 @@ from unittest import TestCase
 from pathos.multiprocessing import ProcessPool
 
 from evored.genome import Genome
-from evored.selection import TournamentSelector
+from evored.algorithm.selection import TournamentSelector
 
 
 class TournamentSelectorTest(TestCase):

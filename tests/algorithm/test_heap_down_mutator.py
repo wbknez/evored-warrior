@@ -7,7 +7,7 @@ from unittest import TestCase
 from pathos.multiprocessing import ProcessPool
 
 from evored.genome import Genome
-from evored.mutation import HeapDownMutator
+from evored.algorithm.mutation import HeapDownMutator
 
 
 class HeapDownMutatorTest(TestCase):

@@ -7,7 +7,7 @@ from unittest import TestCase
 
 from pathos.multiprocessing import ProcessPool
 
-from evored.crossover import UniformCrossover
+from evored.algorithm.crossover import UniformCrossover
 from evored.genome import Genome
 from tests import create_genomes
 

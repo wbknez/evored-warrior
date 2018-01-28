@@ -8,7 +8,7 @@ from unittest import TestCase
 from math import ceil
 from pathos.multiprocessing import ProcessPool
 
-from evored.selection import ReplacementSelector
+from evored.algorithm.selection import ReplacementSelector
 from tests import create_genomes
 
 

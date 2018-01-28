@@ -3,7 +3,7 @@ Contains unit tests for verifying the correctness of crossover pair extraction.
 """
 from unittest import TestCase
 
-from evored.crossover import Crossover
+from evored.algorithm.crossover import Crossover
 from tests import create_genomes
 
 
