@@ -66,6 +66,19 @@ class Warrior(Fitnessable):
     def __str__(self):
         return "\n".join(map(str, self.ins_list))
 
+    def write(self, filename):
+        """
+        Converts this warrior to a valid Redcode source file with the
+        specified file name.
+
+        :param filename: The name of the source file to create.
+        """
+        with open(filename, "w+") as f:
+            f.write(";redcode-94\n")
+            f.write(";name %s\n" % filename)
+            f.write(";author Evo-Red automatic generation\n")
+            f.write("%s\n" % str(self))
+
 
 class Genome(Fitnessable, Tree):
     """
